@@ -1,0 +1,16 @@
+</div>
+</div>
+<div id="footer">
+    <a href="/contact">Contact</a> | <a href="http://www.twitter.com">Twitter</a> | <a href="/index/rss">RSS Feed</a>
+
+    <div id="date">
+        <?php
+        $date = date("D, d M Y H:i:s");
+        echo '<br/>' . $date;
+        ?>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Medic Bag</title>
+        <link href="/default.css" rel="stylesheet" type="text/css">
+            <script type="text/javascript" src="/script.js"></script>
+            <script type="text/javascript" src="/script/jquery.js"></script>
+            <script type="text/javascript" src="/script/cycle.js"></script>
+            <script type="text/javascript" src="/script/datetime.js"></script>
+            <script type ="text/javascript" src ="/script/jquery-1.10.2.min.js"></script>
+    </head>
+
+    <body>
+        <div id="all-content">
+            <a href="/index/index">
+                <div id="header">
+                    <!--                <div id="logo">
+                                        <a href="/index/index"><img src="/../img_global/logo.png" alt="logo"></a>
+                                    </div>
+                    
+                                    <div id="title">
+                                        <h1>Pharm & Cie</h1>
+                    
+                                        <h2 id="motto">My Mottoooo</h2>
+                                    </div>-->
+                </div>
+            </a>
+
+            <ul  id="nav-bar">
+                <?php
+                echo '<li><a class="' . $activeBar[0] . '" href="/index/index">HOME</a></li>
+                <li><a class="' . $activeBar[1] . '" href="/index/services">OUR SERVICES</a></li>
+                <li><a class="' . $activeBar[2] . '" href="/index/whoarewe">WHO ARE WE ?</a></li>
+                <li><a class="' . $activeBar[3] . '" href="/index/contact">CONTACT</a></li>';
+                ?>
+            </ul>
+
+            <div id="statebar">
+                <ul>
+                    <li>
+                        <?php
+                        if (!isset($_SESSION['connected']) || $_SESSION['connected'] == FALSE) {
+                            echo '<a href="/members/signup">Sign Up</a> - <a onclick = "setSignInVisible()" href="#">Sign In</a>';
+                            echo '<ul>';
+                            echo '   <li>';
+                            echo '      <div id="dropdownsignin">';
+
+                            echo '          <form method="post" action="/members/signin" onsubmit="return validateSignIn();">';
+                            echo '          <table>';
+                            echo '              <tr>';
+                            echo '                  <td></td>';
+                            echo '                  <td><div id = "messageSignIn"></div></td>';
+                            echo '              </tr>';
+
+                            echo '              <tr>';
+                            echo '                  <td><label for = "name">Email :</label></td>';
+                            echo '                  <td><input type = "text" name = "email" id = "emailSignIn" value = "" size = "30" maxlength = "30"></td>';
+                            echo '              </tr>';
+
+                            echo '              <tr>';
+                            echo'                    <td><label for = "password">Password :</label></td>';
+                            echo '                  <td><input type = "password" name = "password" id = "passwordSignIn" value = "" size = "30" maxlength = "30"></td>';
+                            echo '              </tr>';
+
+                  echo '              <tr>';
+                                echo '                  <td></td>';
+                                echo '                  <td><button id = "submit" type = "submit">Sign in</button></td>';
+                                echo '              </tr>';
+                                echo '          </table>';
+                                echo '          </form>';
+                                echo '      </div>';
+                                echo '   </li>';
+                                echo '</ul>';
+                            } else if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+                                
+                                echo '<a onclick = "setSignInVisible()" href = "#"> Welcome ' . $_SESSION['firstname'] . ' ' . $_SESSION['lastname'] . "</a>";
+                                echo ' - <a class="link-login" href="/members/logout">Log Out</a>';
+                            }
+                            ?>
+                        </li>
+                    </ul>
+                </div>
+           <?php /*
+=======
+                            echo '              <tr>';
+                            echo '                  <td></td>';
+                            echo '                  <td><button id = "submit" type = "submit">Sign in</button></td>';
+                            echo '              </tr>';
+                            echo '          </table>';
+                            echo '          </form>';
+                            echo '      </div>';
+                            echo '   </li>';
+                            echo '</ul>';
+                        } else if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+                            echo 'Welcome ' . $_SESSION['firstname'] . ' ' . $_SESSION['lastname'] . ' - <a class="link-login" href="/members/logout">Log Out</a>';
+                        }
+                        ?>
+                    </li>
+                </ul>
+            </div>
+>>>>>>> .r39
+*/?>
+            
+

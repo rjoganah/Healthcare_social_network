@@ -1,0 +1,30 @@
+<div id="main">
+    <h1>Add a patient</h1>
+
+    <form method="post" action="/members/addpatient" onsubmit="return validateAddPatient();">
+        <table>
+            <tr>
+                <td></td>
+                <td><div id="messageEdit"></div></td>
+            </tr>
+
+            <tr>
+                <td><label for="patient">Patient :</label></td>
+                <td>
+                    <select id="patientName" name="patientName">
+                        <option value ="-">Select a patient</option>
+                        <?php
+                        for ($i = 0; $i < count($tab); $i++) {
+                            echo('<option value ="' . $tab[$i]->getID() . '">' . $tab[$i]->getLastname() . ' ' . $tab[$i]->getFirstname() . '</option>');
+                        }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><button id="submit" type="submit">Validate</button></td>
+            </tr>
+        </table>
+    </form>

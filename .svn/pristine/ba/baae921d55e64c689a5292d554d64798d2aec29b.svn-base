@@ -1,0 +1,93 @@
+<?php
+
+require_once ('config.php');
+require_once dirname(__FILE__) . '/../model/Member.php';
+require_once dirname(__FILE__) . '/../model/Update.php';
+/*
+ * Represent a profile page we can see : attached to a member and to updates
+ */
+
+class Profile {
+
+    // Member type
+    private $member;
+    // Array of Update objects
+    private $updates;
+
+    /*
+      Fill all properties thanks to the database
+     */
+
+    public function __construct($idMember) {
+        // SELECT
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+        $answer = $bdd->query('SELECT * FROM member where idMember = ' . $idMember);
+
+        $data = $answer->fetch();
+
+        //var_dump($data);
+
+        // Fill member
+        $this->member = new Member($data['pseudo']);
+        
+        //$answer = $bdd->query('SELECT * FROM updates where idMember = ' . $idMember);
+
+        // Fill updates
+        $this->updates = $this->getAll($idMember);
+        
+        
+        //var_dump($this->updates);
+//        while ($data = $answer->fetch()) {
+//            $this->updates[] = new Update($data['idUpdate']);
+//        }
+
+        $answer->closeCursor();
+    }
+    
+    /*
+     * get all updates of a specific member
+     */
+    public function getAll($idMember) {
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+        
+        $answer = $bdd->query('SELECT * FROM updates WHERE idMember =' . $idMember);
+
+        $result = array();
+        
+        while($data = $answer->fetch()) {
+            $update = new Update($data['idUpdate']);
+            
+            $result[] = $update;
+        }
+        
+        $answer->closeCursor();
+        
+        return $result;
+    }
+
+    public function getMember() {
+        return $this->member;
+    }
+
+    public function getUpdates() {
+        return $this->updates;
+    }
+    
+    public function getUpdate($index) {
+        return $this->updates[$index];
+    }
+
+    public function setMember($a) {
+        $this->member = $a;
+    }
+
+    public function setUpdates($a) {
+        $this->updates = $a;
+    }
+
+}
+
+?>

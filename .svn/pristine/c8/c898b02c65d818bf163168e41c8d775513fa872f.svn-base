@@ -1,0 +1,93 @@
+<?php
+
+require_once dirname(__FILE__) . '/../lightmvc/ActionController.php';
+require_once dirname(__FILE__) . '/../model/Profile.php';
+require_once dirname(__FILE__) . '/../model/Member.php';
+require_once dirname(__FILE__) . '/../model/Update.php';
+require_once dirname(__FILE__) . '/../model/Members.php';
+
+class ProfileController extends ActionController {
+
+    /**
+     * Simple index page which links to the main available actions
+     */
+    public function indexAction() {
+        // Do nothing
+    }
+
+    /**
+     *  Edit the profile of the logged member
+     */
+    public function editAction() {
+        // member save
+        // update save
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+
+            // On recupere le profile d'un utilisateur donné
+            $myProfile = new Profile($_SESSION['idMember']);
+
+            $this->profile = $myProfile;
+
+            // Si au moins une entrée du formulaire est remplie on save 
+            if (isset($_POST['description']) || isset($_POST['website'])) {
+
+                $myProfile->getMember()->save();
+
+                $updates = $myProfile->getUpdates();
+
+                for ($i = 0; $i < count($updates); $i++) {
+                    $updates[$i]->save();
+                }
+
+                unset($_POST);
+                $this->redirect('/profile/edit');
+            }
+        }
+        else
+            $this->redirect('/members/signin');
+    }
+
+    /**
+     * Add a like  
+     */
+    public function addAction() {
+
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+            if ($_SESSION['isAdmin'] == 1) {
+                $this->result = TRUE;
+                $this->allMembers = array();
+                $this->allMembers = Members::getAll(-1);
+
+                // update: save
+                if (isset($_POST['content']) && strlen($_POST['content']) > 0 && $_POST['idMember'] != 0) {
+                    $update = new Update();
+
+                    $update->save();
+
+                    unset($_POST);
+                }
+            } else {
+                $this->result = FALSE;
+            }
+        }
+        else
+            $this->redirect('/members/signin');
+    }
+
+    /**
+     * show the profile
+     */
+    public function viewAction() {
+        // use the Profil constructor
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+            $myProfile = new Profile($_SESSION['idMember']);
+
+            $this->profile = $myProfile;
+        }
+        else
+            $this->redirect('/members/signin');
+    }
+
+}
+
+?>

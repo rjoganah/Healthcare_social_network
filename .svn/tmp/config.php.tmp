@@ -1,0 +1,12 @@
+<?php
+//define('DSN', 'mysql:host=sql-users.ece.fr;dbname=ghazal;port=3305');
+<<<<<<< .mine
+define('DSN', 'mysql:host=localhost;dbname=joganah;');
+=======
+//define('DB_USERNAME', 'ghazal-rw');
+//define('DB_PASSWORD', 'JstrnklG');
+define('DSN', 'mysql:host=localhost;dbname=ghazal;');
+>>>>>>> .r93
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', 'root');
+?>

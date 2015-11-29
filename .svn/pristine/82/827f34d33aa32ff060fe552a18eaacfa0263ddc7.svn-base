@@ -1,0 +1,109 @@
+<?php
+
+require_once ('config.php');
+
+class Update {
+
+    // put here the names of fields
+    private $idUpdate = NULL;
+    private $content = NULL;
+    private $date = NULL;
+    private $service = NULL;
+    private $idMember = NULL;
+
+    public function __construct($idUpdate = NULL) {
+        if ($idUpdate != NULL) {
+
+            $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+            $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+            $answer = $bdd->query('SELECT * FROM updates WHERE idUpdate =' . $idUpdate);
+
+            $data = $answer->fetch();
+
+            $this->setID($data['idMember']);
+            $this->setContent($data['content']);
+            $this->setDate($data['date']);
+            $this->setService($data['service']);
+            $this->setIDMember($data['idMember']);
+
+            $answer->closeCursor();
+        }
+    }
+
+    /*
+      Save the update into the database, if the id property is null, create a new Update
+      If not, just update it
+     */
+
+    public function save() {
+        // INSERT, UPDATE
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+        if ($this->getID() == NULL) {
+            $req = $bdd->prepare('INSERT INTO updates(content, date, service, idMember)
+                              VALUES(:content, :date, :service, :idMember)');
+
+            $req->execute(array(
+                'content' => $_POST['content'],
+                'date' => date('Y-m-s H:i:s'),
+                'service' => $_POST['service'],
+                'idMember' => $_POST['idMember'],
+            ));
+        } else {
+            $req = $bdd->prepare('UPDATE updates SET content=:content, date=:date, service=:service, idMember=:idMember WHERE idUpdate=:idUpdate');
+
+            $req->execute(array(
+                'idUpdate' => $this->getID(),
+                'content' => $_POST['content'],
+                'date' => date('Y-m-s H:i:s'),
+                'service' => $_POST['service'],
+                'idMember' => $_POST['idMember'],
+            ));
+        }
+    }
+
+    public function getID() {
+        return $this->idUpdate;
+    }
+
+    public function getContent() {
+        return $this->content;
+    }
+
+    public function getDate() {
+        return $this->date;
+    }
+
+    public function getService() {
+        return $this->service;
+    }
+
+    public function getIDMember() {
+        return $this->idMember;
+    }
+
+    public function setID($a = NULL) {
+        $this->idUpdate = $a;
+    }
+
+    public function setContent($a = NULL) {
+        $this->content = $a;
+    }
+
+    public function setDate($a = NULL) {
+        $this->date = $a;
+    }
+
+    public function setService($a = NULL) {
+        $this->service = $a;
+    }
+
+    public function setIDMember($a = NULL) {
+        $this->idMember = $a;
+    }
+
+}
+
+?>

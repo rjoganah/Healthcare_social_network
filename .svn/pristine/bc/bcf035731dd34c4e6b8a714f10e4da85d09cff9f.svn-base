@@ -1,0 +1,119 @@
+<div class="jcarousel">
+
+    <img src="/script/img/1.jpg" width="926" height="500" alt="">
+    <img src="/script/img/2.jpg" width="926" height="500" alt="">
+    <img src="/script/img/3.jpg" width="926" height="500" alt="">
+    <img src="/script/img/4.jpg" width="926" height="500" alt="">
+
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        /*var jcarousel = $('.jcarousel');
+         
+         jcarousel
+         
+         .on('jcarousel:reload jcarousel:create', function () {
+         jcarousel.jcarousel('items').width(jcarousel.innerWidth());
+         })
+         
+         .jcarousel({
+         wrap : 'circular'
+         itemLoadCallback: {
+         onBeforeAnimation: mycarousel_fadeOut,
+         onAfterAnimation: mycarousel_fadeIn }
+         
+         
+         });
+         
+         function mycarousel_fadeOut(carousel) {
+         var JCcontainerID = carousel.clip.context.id;
+         $('#' + JCcontainerID).fadeOut();
+         }
+         
+         function mycarousel_fadeIn(carousel) {
+         var JCcontainerID = carousel.clip.context.id;
+         $('#' + JCcontainerID).fadeIn();
+         }
+         
+         
+         
+         jcarousel.jcarouselAutoscroll({
+         interval: 3000,
+         target: '+=1',
+         autostart: true
+         });*/
+        $(document).ready(function() {
+            $('.jcarousel').cycle({
+                fx: 'fade', // choose your transition type, ex: fade, scrollUp, shuffle, etc...
+                speed: 2500
+            });
+
+
+        });
+    });
+</script>
+<!--<
+<form method="post" action="/members/signup" onsubmit="return validateSignUp()">
+    <table>
+        <tr>
+            <td></td>
+            <td><div id="message"></div></td>
+        </tr>
+
+        <tr>
+            <td><label for="name">Pseudo :</label></td>
+            <td><input type="text" name="pseudo" id="pseudo" value="" size="30" maxlength="20"></td>
+        </tr>
+
+        <tr>
+            <td><label for="email">E-mail :</label></td>
+            <td><input type="text" name="email" id="email" value="" size="30" maxlength="50"></td>
+        </tr>
+
+        <tr>
+            <td><label for="password">Password :</label></td>
+            <td><input type="password" name="password" id="password" value="" size="30" maxlength="20"></td>
+        </tr>
+
+        <tr>
+            <td><label for="text">Sex :</label></td>
+            <td><select name="sex">
+                    <option value="M">
+                        Male
+                    </option>
+                    <option value="F">
+                        Female
+                    </option>
+                </select></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><button id="submit-button" type="submit">Sign up</button></td>
+        </tr>
+    </table>
+</form>-->
+
+<!--
+//if ($arrayOfSomeMembers != FALSE) {
+//    echo '<h2>User list</h2>
+//
+//<p>You can find the list of people using this application :</p>
+//
+//<table id="user-table" border="1" rules="rows" cellpadding="10px">
+//    <tr>
+//        <th>Name</th>
+//        <th>Picture</th>
+//    </tr>';
+//
+//    for ($i = 0; $i < count($arrayOfSomeMembers); $i++) {
+//        echo "<tr>
+//                <td>" . $arrayOfSomeMembers[$i]->getPseudo() . "</td>
+//                <td>" . $arrayOfSomeMembers[$i]->getImage() . "</td>
+//             </tr>";
+//    }
+//
+//    echo '</table>';
+//}
+//?>-->

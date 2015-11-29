@@ -1,0 +1,124 @@
+function validateSignIn() {
+    var message = document.getElementById('message');
+    
+    var pseudoField = document.getElementById('pseudo');
+    var passField = document.getElementById('password');
+
+    var pseudo = pseudoField.value;
+    var pass = passField.value;
+
+    if (pseudo === null || pseudo === "") {
+        pseudoField.className = "incorrect-field";
+        message.className = "print-message-form";
+        message.innerHTML = "Pseudo is missing.";
+        return false;
+    } else {
+        pseudoField.className = "correct-field";
+    }
+
+    if (pass === null || pass === "") {
+        passField.className = "incorrect-field";
+        message.className = "print-message-form";
+        message.innerHTML = "Password is missing.";
+        return false;
+    } else {
+        passField.className = "correct-field";
+    }
+
+    return true;
+}
+
+function validateSignUp() {
+    var message = document.getElementById('message');
+
+    var pseudoField = document.getElementById('pseudo');
+    var passField = document.getElementById('password');
+    var emailField = document.getElementById('email');
+
+    var pseudo = pseudoField.value;
+    var pass = passField.value;
+    var email = emailField.value;
+
+    var atpos = email.indexOf("@");
+    var dotpos = email.lastIndexOf(".");
+
+    if (pseudo === null || pseudo === "") {
+        pseudoField.className = "incorrect-field";
+        message.className = "print-message-form";
+        message.innerHTML = "Pseudo is missing";
+        return false;
+    } else {
+        pseudoField.className = "correct-field";
+    }
+
+    if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= email.length) {
+        emailField.className = "incorrect-field";
+        message.className = "print-message-form";
+        message.innerHTML = "Email is not correct";
+        return false;
+    } else {
+        emailField.className = "correct-field";
+    }
+
+    if (pass === null || pass === "") {
+        passField.className = "incorrect-field";
+        message.className = "print-message-form";
+        message.innerHTML = "Password is missing";
+        return false;
+    } else {
+        passField.className = "correct-field";
+    }
+
+    if (pass.length <= 4) {
+        passField.className = "incorrect-field";
+        message.className = "print-message-form";
+        message.innerHTML = "Password requires more than 4 caracters";
+        return false;
+    } else {
+        passField.className = "correct-field";
+    }
+
+    return true;
+}
+
+function validateAddExam() {
+    var message = document.getElementById('message');
+    
+    var serviceField = document.getElementById('service');
+    var memberField = document.getElementById('member');
+    var contentField = document.getElementById('content');
+
+    var member = memberField.value;
+    var content = contentField.value;
+    var service = serviceField.value;
+    
+    if (service === "none") {
+        serviceField.className = "incorrect-field";
+        message.className = "print-message-form";
+        message.innerHTML = "Select a service";
+        return false;
+    } else {
+        serviceField.className = "correct-field";
+    }
+    
+    if (member == 0) {
+        memberField.className = "incorrect-field";
+        message.className = "print-message-form";
+        message.innerHTML = "Select a patient";
+        return false;
+    } else {
+        memberField.className = "correct-field";
+    }
+
+    if (content === null || content === "") {
+        contentField.className = "incorrect-field";
+        message.className = "print-message-form";
+        message.innerHTML = "Please add a status";
+        return false;
+    } else {
+        contentField.className = "correct-field";
+    }
+
+    return true;
+}
+

@@ -1,0 +1,13 @@
+<?php
+
+//$command1 = 'ssh ghazal@gandalf.ece.fr';
+//shell_exec($command1);
+//
+//$command2 = 'ssh paris';
+//shell_exec($command2);
+//
+//define('DSN', 'mysql:host=sql-users.ece.fr;dbname=ghazal;port=3305');
+define('DSN', 'mysql:host=localhost;dbname=ghazal;');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', 'root');
+?>

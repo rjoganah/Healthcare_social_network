@@ -1,0 +1,27 @@
+<div id="main">
+    <h1>My Friends</h1>
+
+    <div>
+        <form method="post" action="/profile/addfriend">
+            <button id="submit" type="submit">Add a friend</button>
+        </form>
+    </div>
+    <br/>
+    <?php
+    if (count($myFriends) > 0) {
+        ?>
+        <table>
+            <?php
+            for ($i = 0; $i < count($myFriends); $i++) {
+                echo '<tr>';
+                echo '<td>' . $myFriends[$i]->getFirstname() . ' ' . $myFriends[$i]->getLastname() . '</td>';
+                echo '<td><form method = "post" action = "/profile/friend"><input name = "idProfile" type = "hidden" value = "' . $myFriends[$i]->getID() . '"><input type = "submit" value = "See profile"></form></td>';
+                echo '</tr>';
+            }
+            ?>
+        </table>
+        <?php
+    } else {
+        ?>
+        You have no Friends !
+    <?php } ?>

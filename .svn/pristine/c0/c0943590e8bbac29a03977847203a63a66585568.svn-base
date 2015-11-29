@@ -1,0 +1,16 @@
+<div id="main">
+<h1>Menu</h1>
+
+<div id="edit-menu">
+<form method="post" action="/profile/view"><input type="submit" value="My profile"></form></br>
+<!--<a href="/profile/view">My profile</a><br/>-->
+<!--<a href="/profile/friend">My wall</a><br/>-->
+<form method="post" action="/profile/friend"><input name="idFriend" type="hidden" value="<?php echo $_SESSION['idMember']; ?>"><input type="submit" value="My wall"></form></br>
+<form method="post" action="/profile/listfriends"><input type="submit" value="My friends"></form></br>
+<form method="post" action="/profile/editcoordonnate"><input type="submit" value="Edit my profile"></form></br>
+<form method="post" action="/profile/editpassword"><input type="submit" value="Edit my password"></form></br>
+
+<!--<a href="/profile/listfriends">My friends</a><br/>
+<a href="/profile/editcoordonnate">Edit my profile</a><br/>
+<a href="/profile/editpassword">Edit my password</a><br/>-->
+</div>

@@ -1,0 +1,11 @@
+<h1>Sign up</h1>
+<?php
+//var_dump($newMember);
+if (isset($newMember)) {
+    echo 'Sign up success !<br />';
+    echo 'You can know log in by clicking <a class="link-login" href="/members/signin">here</a>';
+}
+else
+    echo 'One or multiple fields are missing.'
+    ?>
+<p></p>

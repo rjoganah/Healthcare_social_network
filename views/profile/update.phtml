@@ -1,0 +1,51 @@
+<div id="main">
+<div id ="wall2">
+
+            <?php if (count($profile->getExams()) > 0){ ?>
+            <table id="user-table" border="1" rules="all" cellpadding="10px">
+                <tr>
+                    <th>Service</th>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Comment</th>
+                <tr>
+                    <?php
+                    
+                    for ($i = 0; $i < count($profile->getExams()); $i++) {
+                        echo '  <tr>';
+                        echo '      <td>' . $profile->getExam($i)->getService() . '</td>';
+                        echo '      <td>' . $profile->getExam($i)->getDoctor() . '</td>';
+                        echo '      <td>' . $profile->getExam($i)->getDate() . '</td>';
+                        echo '      <td>' . $profile->getExam($i)->getComment() . '</td>';
+                        echo '  </tr>';
+                    }
+                    }
+                    else{
+                        echo '<div><p>No exams done.</p></div>';
+                    }
+                    ?>
+
+        </table>
+    
+</div>
+    
+    <div id="friend-wall">
+        <?php
+        if (count($result['comments']) > 0) {
+            for ($i = 0; $i < count($result['comments']); $i++) {
+                echo '<table>';
+                echo '  <tr>';
+                echo '      <td><label for="sender">'. $result['names'][$i] . ' :</label></td>';
+                echo '  </tr>';
+                echo '  <tr>';
+                echo '      <td><label for="commentaire">'. $result['comments'][$i]->getComment() . '</label></td>';
+                echo '  </tr>';
+                echo '  <tr>';
+                echo '      <td><label for="date">'. $result['comments'][$i]->getDate() . '</label></td>';
+                echo '  </tr>';
+                echo '</table>';
+                echo '<br/>';
+            }
+        }
+        ?>
+    </div>

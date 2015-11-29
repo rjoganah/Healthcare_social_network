@@ -1,0 +1,9 @@
+<div id="main">
+<h1>Menu</h1>
+
+<div id="edit-menu">
+<a href="/profile/view">My profile</a><br/>
+<a href="/profile/listfriends">My friends</a><br/>
+<a href="/profile/editcoordonnate">Edit my infos</a><br/>
+<a href="/profile/editpassword">Edit my password</a><br/>
+</div>

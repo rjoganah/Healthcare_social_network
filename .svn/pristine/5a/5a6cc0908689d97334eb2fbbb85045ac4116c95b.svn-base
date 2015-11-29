@@ -1,0 +1,91 @@
+<?php
+
+require_once dirname(__FILE__) . '/../lightmvc/ActionController.php';
+require_once dirname(__FILE__) . '/../model/Members.php';
+require_once dirname(__FILE__) . '/../model/Member.php';
+
+class MembersController extends ActionController {
+
+    /**
+     * Simple index page which links to the main available actions
+     */
+    public function indexAction() {
+        // Do nothing
+    }
+
+    public function signupAction() {
+
+        if (isset($_POST['pseudo']) && strlen($_POST['pseudo']) > 0 &&
+                isset($_POST['password']) && strlen($_POST['password']) > 0 &&
+                isset($_POST['email']) && strlen($_POST['email']) > 0) {
+            $newMember = new Member();
+
+            $newMember->setPseudo($_POST['pseudo']);
+            $newMember->setPassword($_POST['password']);
+            $newMember->setEmail($_POST['email']);
+            $newMember->setSex($_POST['sex']);
+
+            // use member : save
+            $newMember->save();
+
+            $this->newMember = $newMember;
+            
+            unset($_POST);
+        }
+    }
+
+    public function signinAction() {
+        // use members : signin
+        if (isset($_POST['pseudo']) && isset($_POST['password'])) {
+            $signInOkay = Members::signIn($_POST['pseudo'], $_POST['password']);
+
+            if ($signInOkay == TRUE) {
+                $this->msgSignIn = "Sign in success";
+                $connectedMember = new Member($_POST['pseudo']);
+
+                $_SESSION['connected'] = TRUE;
+                $_SESSION['pseudo'] = $connectedMember->getPseudo();
+                $_SESSION['isAdmin'] = $connectedMember->isAdmin();
+                $_SESSION['idMember'] = $connectedMember->getID();
+
+                unset($_POST);
+                // Redirection vers l'edition du profile si connexion reussie
+                $this->redirect('/profile/edit');
+            } else {
+                $this->msgSignIn = "Sign in failure";
+                $_SESSION['connected'] = FALSE;
+            }
+        }
+    }
+
+    public static function listAction() {
+        // use members : list
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE && $_SESSION['isAdmin'] == 1) {
+            return Members::getFrontProfiles(true);
+        } else {
+            return FALSE;
+            //$this->redirect('/members/signin');
+        }
+    }
+
+    public function deleteAction() {
+        // use members: delete 
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE && $_SESSION['isAdmin'] == 1) {
+            // TODO: Set an id as parameter
+            Members::delete();
+        }
+        else
+            $this->redirect('/members/signin');
+    }
+
+    public function logoutAction() {
+        if ($_SESSION['connected'] == TRUE && isset($_SESSION['connected'])) {
+            $_SESSION['connected'] = FALSE;
+            session_destroy();
+            $this->redirect('/index/index');
+        }
+    }
+
+}
+
+?>

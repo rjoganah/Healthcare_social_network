@@ -1,0 +1,169 @@
+<?php
+
+require_once ('config.php');
+
+class Member {
+
+    private $idMember = NULL;
+    private $isAdmin = 0;
+    private $pseudo;
+    private $password;
+    private $email;
+    private $sex;
+    private $description = NULL;
+    private $image = NULL;
+    private $website = NULL;
+
+    /*
+      If the pseudo is not null, get the data from database and fill the properties
+      If the pseudo is null, do nothing
+     */
+
+    public function __construct($pseudo = NULL) {
+        if ($pseudo != NULL) {
+
+            $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+            $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+            $answer = $bdd->query('SELECT * FROM member WHERE pseudo = "' . $pseudo . '"');
+
+            $data = $answer->fetch();
+
+            $this->setID($data['idMember']);
+            $this->setPseudo($data['pseudo']);
+            $this->setEmail($data['email']);
+            $this->setPassword($data['password']);
+            $this->setSex($data['sex']);
+            $this->setImage($data['image']);
+            $this->setDescription($data['description']);
+            $this->setWebsite($data['website']);
+            $this->setAdmin($data['isAdmin']);
+
+            $answer->closeCursor();
+        }
+    }
+
+    /*
+      Save the member into the database. If the id property is null, create a new member
+      If not, just update it
+     */
+
+    public function save() {
+        //UPDATE & INSERT
+
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+        if ($this->getID() == NULL) {
+            $req = $bdd->prepare('INSERT INTO member(pseudo, email, password, sex, image, description, website, isAdmin)
+                              VALUES(:pseudo, :email, :password, :sex, :image, :description, :website, :isAdmin)');
+
+            $req->execute(array(
+                ':pseudo' => $this->getPseudo(),
+                ':email' => $this->getEmail(),
+                ':password' => $this->getPassword(),
+                ':sex' => $this->getSex(),
+                ':image' => $this->getImage(),
+                ':description' => $this->getDescription(),
+                ':website' => $this->getWebsite(),
+                ':isAdmin' => 0
+            ));
+        } else {
+            $req = $bdd->prepare('UPDATE member SET image=:image, description=:description, website=:website WHERE idMember=:idMember');
+            
+            $req->execute(array(
+                ':idMember' => $this->getID(),
+                ':image' => $this->getImage(),
+                ':description' => $_POST['description'],
+                ':website' => $_POST['website']
+            ));
+        }
+    }
+
+    /* is the current member admin ? */
+
+    public function isAdmin() {
+        // SELECT
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+        $answer = $bdd->query('SELECT isAdmin FROM member WHERE idMember =' . $this->idMember);
+
+        $data = $answer->fetch();
+
+        $answer->closeCursor();
+
+        return $data['isAdmin'];
+    }
+
+    public function getPseudo() {
+        return $this->pseudo;
+    }
+
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function getID() {
+        return $this->idMember;
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function getSex() {
+        return $this->sex;
+    }
+
+    public function getImage() {
+        return $this->image;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function getWebsite() {
+        return $this->website;
+    }
+
+    public function setAdmin($a = NULL) {
+        $this->isAdmin = $a;
+    }
+
+    public function setPseudo($ps = NULL) {
+        $this->pseudo = $ps;
+    }
+
+    public function setPassword($pwd = NULL) {
+        $this->password = $pwd;
+    }
+
+    public function setEmail($mail = NULL) {
+        $this->email = $mail;
+    }
+
+    public function setSex($s = NULL) {
+        $this->sex = $s;
+    }
+
+    public function setDescription($s = NULL) {
+        $this->description = $s;
+    }
+
+    public function setImage($s = NULL) {
+        $this->image = $s;
+    }
+
+    public function setWebsite($s = NULL) {
+        $this->website = $s;
+    }
+
+    public function setID($s = NULL) {
+        $this->idMember = $s;
+    }
+
+}
+
+?>

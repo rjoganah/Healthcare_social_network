@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Pharm & Cie</title>
+        <link href="/default.css" rel="stylesheet" type="text/css">
+            <script type="text/javascript" src="/script.js"></script>
+    </head>
+
+    <body>
+        <div id="all-content">
+            <div id="header">
+                <div id="logo">
+                    <a href="/index/index"><img src="/../img_global/logo.png" alt="logo"></a>
+                </div>
+
+                <div id="title">
+                    <h1>Pharm & Cie</h1>
+
+                    <h2 id="motto">My Mottoooo</h2>
+                </div>
+            </div>
+
+            <ul  id="nav-bar">
+                <li><a href="/index/index">Home</a></li>
+                <li><a href="/profile/view">My Profile</a></li>
+                <li><a href="/profile/edit">Edit My Profile</a></li>
+                <li><a href="/profile/add">Post an exam</a></li>
+            </ul>
+
+            <div id="main-statebar">
+                <div id="statebar">
+                    <ul>
+                        <li>
+                            <?php
+                            if (!isset($_SESSION['connected']) || $_SESSION['connected'] == FALSE) {
+                                echo '<a onclick = "setSignInVisible()" href="#">Sign In</a>';
+                                echo '<ul>';
+                                echo '   <li>';
+                                echo '      <div id="dropdownsignin">';
+
+                                echo '          <form method="post" action="/members/signin" onsubmit="return validateSignIn()">';
+                                echo '          <table>';
+                                echo '              <tr>';
+                                echo '                  <td></td>';
+                                echo '                  <td><div id = "messageSignIn"></div></td>';
+                                echo '              </tr>';
+
+                                echo '              <tr>';
+                                echo '                  <td><label for = "name">Pseudo :</label></td>';
+                                echo '                  <td><input type = "text" name = "pseudo" id = "pseudoSignIn" value = "" size = "30" maxlength = "30"></td>';
+                                echo '              </tr>';
+
+                                echo '              <tr>';
+                                echo'                    <td><label for = "password">Password :</label></td>';
+                                echo '                  <td><input type = "password" name = "password" id = "passwordSignIn" value = "" size = "30" maxlength = "30"></td>';
+                                echo '              </tr>';
+
+                                echo '              <tr>';
+                                echo '                  <td></td>';
+                                echo '                  <td><button id = "submit" type = "submit">Sign in</button></td>';
+                                echo '              </tr>';
+                                echo '          </table>';
+                                echo '          </form>';
+                                echo '      </div>';
+                                echo '   </li>';
+                                echo '</ul>';
+
+//                        echo '<a onclick = "setSignInVisible()" href="#">Sign In</a>';
+//                        echo '<div id ="dropdownsignin">';
+//                        echo '  <ul>';
+//                        echo '      <li>';
+//                        echo '          <a href = "#" id = "dropdownsignin1"> Name : </a>';
+//                        echo '      </li>';
+//                        echo '      <li>';
+//                        echo '          <a href = "#"> Passwd : </a>';
+//                        echo '      </li>';
+//                        echo '  </ul>';
+//                        echo '</div>';
+                            } else if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+                                echo 'Welcome ' . $_SESSION['pseudo'] . ' - <a class="link-login" href="/members/logout">Log Out</a>';
+                            }
+                            ?>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="main">
+
+

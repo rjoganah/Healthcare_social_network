@@ -1,0 +1,5 @@
+<div id="main">
+<h1>Edit my profile :</h1>
+
+<a href="/profile/editcoordonnate">Edit my coordonnates</a>
+<a href="/profile/editpassword">Edit my password</a>

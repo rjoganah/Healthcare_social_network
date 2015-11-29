@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Pharm & Cie</title>
+        <link href="/default.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="/script.js"></script>
+    </head>
+
+    <body>
+        <div id="all-content">
+            <div id="header">
+                <div id="logo">
+                    <a href="/index/index"><img src="/../img_global/logo.png" alt="logo"></a>
+                </div>
+
+                <div id="title">
+                    <h1>Pharm & Cie</h1>
+
+                    <h2 id="motto">My Mottoooo</h2>
+                </div>
+            </div>
+
+            <ul id="nav">
+                <a href="/index/index"><li>Home</li></a>
+                <a href="/profile/view"><li>My Profile</li></a> 
+                <a href="/profile/edit"><li>Edit My Profile</li></a> 
+                <a href="/profile/add"><li>Post an exam</li></a>
+            </ul>
+
+            <!--style="color: #CC0000"-->
+
+            <div id="loginbar">
+                <?php
+                if (!isset($_SESSION['connected']) || $_SESSION['connected'] == FALSE) {
+                    echo '<a class="link-login" href="/members/signin">Sign In</a>';
+                } else if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+                    echo 'Welcome ' . $_SESSION['pseudo'] . ' - <a class="link-login" href="/members/logout">Log Out</a>';
+                }
+                ?>
+            </div>
+
+            <div id="main">

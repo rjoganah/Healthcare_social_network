@@ -1,0 +1,33 @@
+<h1>Sign in</h1>
+<p></p>
+
+<?php
+if (isset($msgSignIn))
+    echo "/*** " . $msgSignIn . " ***\\";
+?>
+
+<p></p>
+
+<form method="post" action="/members/signin" onsubmit="return validateSignIn()">
+    <table>
+        <tr>
+            <td></td>
+            <td><div id="message"></div></td>
+        </tr>
+        
+        <tr>
+            <td><label for="name">Pseudo :</label></td>
+            <td><input type="text" name="pseudo" id="pseudo" value="" size="30" maxlength="30"></td>
+        </tr>
+
+        <tr>
+            <td><label for="password">Password :</label></td>
+            <td><input type="password" name="password" id="password" value="" size="30" maxlength="30"></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><button id="submit" type="submit">Sign in</button></td>
+        </tr>
+    </table>
+</form>

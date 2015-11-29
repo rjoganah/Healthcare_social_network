@@ -1,0 +1,49 @@
+<h1>Edit my coordonnates :</h1>
+
+<form method="post" action="/profile/editcoordonnate" onsubmit="return validateEditCoordonnate();">
+    <table>
+        <tr>
+            <td></td>
+            <td><div id="messageEdit"></div></td>
+        </tr>
+
+        <tr>
+            <td><label for="ssn">SSN :</label></td>
+            <td><input type="text" name="ssnEdit" id="ssnEdit" value="<?php echo $profile->getMember()->getSSN(); ?>" size="39" maxlength="15"></td>
+        </tr>
+
+<!--        <tr>
+            <td><label for="firstname">Firstname :</label></td>
+            <td><input type="text" name="firstnameEdit" id="firstnameEdit" value="<?php echo $profile->getMember()->getFirstname(); ?>" size="39" maxlength="30"></td>
+        </tr>
+
+        <tr>
+            <td><label for="lastname">Lastname :</label></td>
+            <td><input type="text" name="lastnameEdit" id="lastnameEdit" value="<?php echo $profile->getMember()->getLastname(); ?>" size="39" maxlength="30"></td>
+        </tr>-->
+
+<!--        <tr>
+            <td><label for="text">Sex :</label></td>
+            <td><select id="sexEdit" name="sexEdit">
+                    <option value="-">-</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select></td>
+        </tr>-->
+        
+        <tr>
+            <td><label for="phone">Phone :</label></td>
+            <td><input type="text" name="phoneEdit" id="phoneEdit" value="<?php echo $profile->getMember()->getPhone(); ?>" size="39" maxlength="30"></td>
+        </tr>
+
+        <tr>
+            <td><label for="email">E-mail :</label></td>
+            <td><input type="text" name="emailEdit" id="emailEdit" value="<?php echo $profile->getMember()->getEmail(); ?>" size="39" maxlength="50"></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><button id="submit" type="submit">Save</button></td>
+        </tr>
+    </table>
+</form>

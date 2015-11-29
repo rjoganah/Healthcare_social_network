@@ -1,0 +1,53 @@
+<h1>Sign up</h1>
+
+<form method="post" action="/members/signup" onsubmit="return validateSignUp()">
+    <table>
+        <tr>
+            <td></td>
+            <td><div id="message"></div></td>
+        </tr>
+        
+        <tr>
+            <td><label for="name">Pseudo :</label></td>
+            <td><input type="text" name="pseudo" id="pseudo" value="" size="30" maxlength="20"></td>
+        </tr>
+
+        <tr>
+            <td><label for="email">E-mail :</label></td>
+            <td><input type="text" name="email" id="email" value="" size="30" maxlength="50"></td>
+        </tr>
+
+        <tr>
+            <td><label for="password">Password :</label></td>
+            <td><input type="password" name="password" id="password" value="" size="30" maxlength="20"></td>
+        </tr>
+
+        <tr>
+            <td><label for="text">Sex :</label></td>
+            <td><select name="sex">
+                    <option value="M">
+                        Male
+                    </option>
+                    <option value="F">
+                        Female
+                    </option>
+                </select></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><button id="submit-button" type="submit">Sign up</button></td>
+        </tr>
+    </table>
+</form>
+
+<?php
+//var_dump($newMember);
+if (isset($newMember)) {
+    echo 'Sign up success !<br />';
+    echo 'You can know log in by clicking <a class="link-login" href="/members/signin">here</a>';
+}
+else
+    echo 'One or multiple fields are missing.'
+    ?>
+<p></p>

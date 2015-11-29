@@ -1,0 +1,57 @@
+<div id="main">
+<?php
+
+if ($result == FALSE) {
+    echo 'Unauthorized access';
+} else {
+    echo '<h1>Post an exam</h1>';
+    echo '<p></p>';
+
+    echo '<form method="post" action="/profile/add" onsubmit="return validateAddExam()">';
+    echo '<table>';
+    
+    echo '  <tr>';
+    echo '      <td></td>';
+    echo '      <td><div id="message"></div></td>';
+    echo '  </tr>';
+    
+    echo '  <tr>';
+    echo '      <td><label for="service">Service :</label></td>';
+    echo '      <td>';
+    echo '          <select id="service" name="service">';
+    echo '              <option value="none">- Select a service</option>';
+    echo '              <option value="Cardiology">Cardiology</option>';
+    echo '              <option value="Neurology">Neurology</option>';
+    echo '              <option value="Cancerology">Cancerology</option>';
+    echo '              <option value="Radiology">Radiology</option>';
+    echo '          </select>';
+    echo '      </td>';
+    echo '  </tr>';
+    
+    echo '  <tr>';
+    echo '      <td><label for="patient">Patient :</label></td>';
+    echo '      <td>';
+    echo '          <select id="member" name="idMember">';
+    echo '          <option value="0">- Select a patient</option>';
+    
+    for ($i = 0; $i < count($allMembers); $i++) {
+        echo '<option value=' . $allMembers[$i]['idMember'] . '>' . $allMembers[$i]['pseudo'] . '</option>';
+    }
+    
+    echo '          </select>';
+    echo '      </td>';
+    echo '  </tr>';
+
+    echo '  <tr>';
+    echo '      <td><label for="content">Status :</label></td>';
+    echo '      <td><textarea name="content" id="content" rows="4" cols="22"></textarea></td>';
+    echo '  </tr>';
+
+    echo '  <tr>';
+    echo '      <td></td>';
+    echo '      <td><button id="submit-button" type="submit">Submit</button></td>';
+    echo '  </tr>';
+    echo '</table>';
+    echo '</form>';
+}
+?>

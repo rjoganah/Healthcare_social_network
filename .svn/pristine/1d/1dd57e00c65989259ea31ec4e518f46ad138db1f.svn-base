@@ -1,0 +1,24 @@
+<div id="main">
+<div id ="wall2">
+
+
+            <table id="user-table" border="1" rules="all" cellpadding="10px">
+                <tr>
+                    <th>Service</th>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Comment</th>
+                <tr>
+                    <?php
+                    for ($i = 0; $i < count($profile->getExams()); $i++) {
+                        echo '  <tr>';
+                        echo '      <td>' . $profile->getExam($i)->getService() . '</td>';
+                        echo '      <td>' . $profile->getExam($i)->getDoctor() . '</td>';
+                        echo '      <td>' . $profile->getExam($i)->getDate() . '</td>';
+                        echo '      <td>' . $profile->getExam($i)->getComment() . '</td>';
+                        echo '  </tr>';
+                    }
+                    ?>
+
+        </table>
+</div>

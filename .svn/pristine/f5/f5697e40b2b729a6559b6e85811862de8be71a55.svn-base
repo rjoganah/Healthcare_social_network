@@ -1,0 +1,17 @@
+<div id="main">
+<h1>Add a patient</h1>
+
+<select id="patientName" name="patientName">
+<?php 
+
+for($i=0;$i<sizeof($tab);$i++)
+{
+ echo('<option value = '.$tab[$i].'>'.$tab[$i].'</option>');   
+}
+?>
+</select>
+
+ <form method="post" action="/members/addpatient">
+      
+            <button id="submit" type="submit">validate</button>
+ </form>

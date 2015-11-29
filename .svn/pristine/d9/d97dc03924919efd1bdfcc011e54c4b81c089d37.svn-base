@@ -1,0 +1,22 @@
+<div id="main-jcarousel-whoarewe">
+<div class="jcarousel-whoarewe">
+
+    <img src="/script/img/david1.jpg" width="958" height="500" alt="">
+    <img src="/script/img/david2.jpeg" width="958" height="500" alt="">
+    <img src="/script/img/david3.jpg" width="958" height="500" alt="">
+
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $(document).ready(function() {
+            $('.jcarousel-whoarewe').cycle({
+                fx: 'fade', // choose your transition type, ex: fade, scrollUp, shuffle, etc...
+                speed: 2000,
+                timeout:2500
+            });
+
+
+        });
+    });
+</script>

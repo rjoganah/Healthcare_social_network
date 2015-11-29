@@ -1,0 +1,107 @@
+<div id="main">
+    <h1>My Profile</h1>
+    <div id="info-user-profile">
+        <div id="photo">
+            <?php
+            echo '<img src="';
+            if ($profile->getMember()->getPhoto() == NULL)
+                echo '/../img_global/unknown_photo_2.png">';
+
+            else {
+                // récuperer la photo
+            }
+            ?>
+        </div>
+        <div><table id="user-info" rules="none" cellpadding="2px">
+                <?php
+                echo '  <tr>';
+                echo '      <td>' . $profile->getMember()->getFirstname() . ' ' . $profile->getMember()->getLastname() . '</td>';
+                echo '  </tr>';
+                echo '  <tr>';
+                echo '      <td>' . $profile->getMember()->getBirthdate() . '</td>';
+                echo '  </tr>';
+                echo '  <tr>';
+                echo '      <td>' . $profile->getMember()->getEmail() . '</td>';
+                echo '  </tr>';
+                echo '  <tr>';
+                echo '      <td>SSN : ' . $profile->getMember()->getSSN() . '</td>';
+                echo '  </tr>';
+                echo '  <tr>';
+                echo '      <td>Tel : ' . $profile->getMember()->getPhone() . '</td>';
+                echo '  </tr>';
+                ?>
+            </table>
+        </div>
+    </div>
+
+    <?php if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) { ?>
+        <div>
+            <form method="post" action="/members/addpatient">
+                <button id="submit" type="submit">Add a patient</button>
+            </form>
+        </div>
+        <br/>
+        <div id="info-exam-profile">
+            <h2>My Patients</h2>
+            <?php if (count($mypatients) > 0) { ?>
+
+                <table id="user-table" border="1" rules="rows" cellpadding="10px">
+                    <tr>
+                        <th>Name</th>
+                        <th>SSN</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <?php
+                    for ($i = 0; $i < count($mypatients); $i++) {
+                        echo '  <tr>';
+                        echo '      <td>' . $mypatients[$i]->getFirstname() . ' ' . $mypatients[$i]->getLastname() . '</td>';
+                        echo '      <td>' . $mypatients[$i]->getSSN() . '</td>';
+
+                        echo '<td><form method="post" action="/profile/add"><input name="idAdd" type="hidden" value="' . $mypatients[$i]->getID() . '"><input type="submit" value="Add"></form></td>';
+                        echo '<td><form method="post" action="/profile/add"><input name="idEdit" type="hidden" value="' . $mypatients[$i]->getID() . '"><input type="submit" value="Edit"></form></td>';
+                        echo '<td><form method="post" action="/members/delete"><input name="idDelete" type="hidden" value="' . $mypatients[$i]->getID() . '"><input type="submit" value="Delete"></form></td>';
+                        echo '</tr>';
+                    }
+                    ?>
+
+                </table>
+                <?php
+            } else {
+                echo '<p><div>No patient yet.</div></p>';
+            }
+            ?>
+        </div>
+    <?php } else { ?>
+        <div id="info-exam-profile">
+            <button type ="button" onclick ="refreshWall();">Refresh</button>
+            <div id ="wall">
+                <?php if (count($profile->getExams()) > 0) { ?>
+                    <table id="user-table" border="1" rules="all" cellpadding="10px">
+                        <tr>
+                            <th>Service</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Comment</th>
+                        <tr>
+                            <?php
+                            for ($i = 0; $i < count($profile->getExams()); $i++) {
+                                echo '  <tr>';
+                                echo '      <td>' . $profile->getExam($i)->getService() . '</td>';
+                                echo '      <td>' . $profile->getExam($i)->getDoctor() . '</td>';
+                                echo '      <td>' . $profile->getExam($i)->getDate() . '</td>';
+                                echo '      <td>' . $profile->getExam($i)->getComment() . '</td>';
+                                echo '  </tr>';
+                            }
+                            ?>
+
+                    </table> 
+                    <?php
+                } else {
+                    echo '<div><p>No exams done.</p></div>';
+                }
+                ?>
+            </div>
+        </div>
+    <?php } ?>

@@ -1,0 +1,324 @@
+<?php
+
+require_once dirname(__FILE__) . '/../lightmvc/ActionController.php';
+require_once dirname(__FILE__) . '/../model/Profile.php';
+require_once dirname(__FILE__) . '/../model/Member.php';
+require_once dirname(__FILE__) . '/../model/Exam.php';
+require_once dirname(__FILE__) . '/../model/Members.php';
+
+class ProfileController extends ActionController {
+
+    /**
+     * Simple index page which links to the main available actions
+     */
+    public function indexAction() {
+        // Do nothing
+    }
+
+    public function editpasswordAction() {
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+            // On recupere le profile d'un utilisateur donne
+            $myProfile = new Profile($_SESSION['idMember']);
+
+            $this->profile = $myProfile;
+
+            if (isset($_POST['password1Edit']) && isset($_POST['password2Edit']) && strlen($_POST['password2Edit']) > 4) {
+
+                $myProfile->getMember()->savePassword($_POST['password2Edit']);
+
+                unset($_POST);
+                $this->redirect('/profile/edit');
+            }
+
+            $tableau = array();
+            $tableau[0] = 'none';
+            $tableau[1] = 'none';
+            $tableau[2] = 'none';
+            $tableau[3] = 'none';
+
+            $this->activeBar = $tableau;
+        } else {
+            $this->redirect('/index/index');
+        }
+    }
+
+    public function editcoordonnateAction() {
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+
+            $tableau = array();
+            $tableau[0] = 'none';
+            $tableau[1] = 'none';
+            $tableau[2] = 'none';
+            $tableau[3] = 'none';
+
+            $this->activeBar = $tableau;
+
+            // On recupere le profile d'un utilisateur donne
+            $myProfile = new Profile($_SESSION['idMember']);
+
+            $this->profile = $myProfile;
+
+            if (isset($_SESSION['editprofile']) && $_SESSION['editprofile'] == FALSE) {
+                $_SESSION['editprofile'] = TRUE;
+            } else if (isset($_SESSION['editprofile']) && $_SESSION['editprofile'] == TRUE) {
+
+                // Si au moins une entree du formulaire est remplie on save 
+                if (isset($_POST['ssnEdit']) && isset($_POST['phoneEdit']) && isset($_POST['emailEdit'])) {
+
+                    $myProfile->getMember()->saveCoordonnate($_POST['ssnEdit'], $_POST['phoneEdit'], $_POST['emailEdit']);
+
+//                $exams = $myProfile->getExams();
+//
+//                for ($i = 0; $i < count($exams); $i++) {
+//                    $exams[$i]->save();
+//                }
+
+                    unset($_POST);
+                    $this->redirect('/profile/edit');
+                }
+            }
+        } else {
+            $this->redirect('/index/index');
+        }
+    }
+
+    /**
+     *  Edit the profile of the logged member
+     */
+    public function editAction() {
+        // member save
+        // update save
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+
+            $tableau = array();
+            $tableau[0] = 'none';
+            $tableau[1] = 'none';
+            $tableau[2] = 'none';
+            $tableau[3] = 'none';
+
+            $this->activeBar = $tableau;
+
+            $_SESSION['editprofile'] = FALSE;
+        }
+        else
+            $this->redirect('/index/index');
+    }
+
+    /**
+     * Add a like  
+     */
+    public function addAction() {
+
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+
+            $tableau = array();
+            $tableau[0] = 'none';
+            $tableau[1] = 'none';
+            $tableau[2] = 'none';
+            $tableau[3] = 'none';
+            $this->activeBar = $tableau;
+
+            if ($_SESSION['isAdmin'] == 1) {
+                $this->result = TRUE;
+//                $this->allMembers = array();
+//                $this->allMembers = Members::getAll(-1);
+
+                if (isset($_POST['idAdd']) && $_POST['idAdd'] > 0)
+                    $_SESSION['idAdd'] = $_POST['idAdd'];
+
+                // update: save
+                if (isset($_POST['content']) && strlen($_POST['content']) > 0 && $_POST['service'] != "-" && $_SESSION['idAdd'] > 0) {
+
+                    $update = new Exam();
+
+                    $update->save($_POST['content'], $_POST['service'], $_SESSION['idAdd'], $_SESSION['idMember']);
+
+                    unset($_POST);
+                    unset($_SESSION['idAdd']);
+                    $this->redirect('/profile/view');
+                }
+            } else {
+                $this->result = FALSE;
+                $this->redirect('/index/index');
+            }
+        }
+        else
+            $this->redirect('/index/index');
+    }
+
+    /**
+     * show the profile
+     */
+    public function viewAction() {
+        // use the Profil constructor
+        $tableau = array();
+        $tableau[0] = 'none';
+        $tableau[1] = 'none';
+        $tableau[2] = 'none';
+        $tableau[3] = 'none';
+
+        $this->activeBar = $tableau;
+
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+            $myProfile = new Profile($_SESSION['idMember']);
+
+            $this->profile = $myProfile;
+
+            if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
+                $this->mypatients = Members::getMyPatients($_SESSION['idMember']);
+            }
+        }
+        else
+            $this->redirect('/index/index');
+    }
+
+    public function updateAction() {
+        $tableau = array();
+        $tableau[0] = 'none';
+        $tableau[1] = 'none';
+        $tableau[2] = 'none';
+        $tableau[3] = 'none';
+
+        $this->activeBar = $tableau;
+
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+            $myProfile = new Profile($_SESSION['idMember']);
+
+            $this->profile = $myProfile;
+        } else {
+            $this->redirect('/index/index');
+        }
+    }
+
+    public function listfriendsAction() {
+        $tableau = array();
+        $tableau[0] = 'none';
+        $tableau[1] = 'none';
+        $tableau[2] = 'none';
+        $tableau[3] = 'none';
+
+        $this->activeBar = $tableau;
+
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+            // $myProfile = new Profile($_SESSION['idMember']);
+
+            $this->myFriends = Members::getMyFriends($_SESSION['idMember']);
+
+            //var_dump($this->myFriends);
+        } else {
+            $this->redirect('/index/index');
+        }
+    }
+
+    public function wallAction() {
+        $tableau = array();
+        $tableau[0] = 'none';
+        $tableau[1] = 'none';
+        $tableau[2] = 'none';
+        $tableau[3] = 'none';
+
+        $this->activeBar = $tableau;
+
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+            // $myProfile = new Profile($_SESSION['idMember']);
+
+            if (isset($_POST['comment']) && strlen($_POST['comment']) > 0) {
+                $newComment = new Comment();
+                $newComment->save($_SESSION['idFriend'], $_SESSION['idMember'], $_POST['comment']);
+
+                $_POST['comment'] = "";
+                unset($_POST['comment']);
+            }
+
+            $this->friendSelected = new Member(NULL, $_SESSION['idFriend']);
+            $this->result = Members::getAllComment($_SESSION['idFriend']);
+        } else {
+            $this->redirect('/index/index');
+        }
+    }
+
+    public function friendAction() {
+        $tableau = array();
+        $tableau[0] = 'none';
+        $tableau[1] = 'none';
+        $tableau[2] = 'none';
+        $tableau[3] = 'none';
+
+        $this->activeBar = $tableau;
+
+        if (isset($_SESSION['connected']) && $_SESSION['connected'] == TRUE) {
+            // $myProfile = new Profile($_SESSION['idMember']);
+            if (isset($_POST['idFriend'])) {
+                $_SESSION['idFriend'] = $_POST['idFriend'];
+            }
+            if (isset($_POST['comment']) && strlen($_POST['comment']) > 0) {
+                $newComment = new Comment();
+                $newComment->save($_POST['idFriend'], $_SESSION['idMember'], $_POST['comment']);
+
+                $_POST['comment'] = "";
+                unset($_POST['comment']);
+            }
+
+            $this->friendSelected = new Member(NULL, $_POST['idFriend']);
+            $this->result = Members::getAllComment($_POST['idFriend']);
+        } else {
+            $this->redirect('/index/index');
+        }
+    }
+
+    public function addfriendAction() {
+
+        $tableau = array();
+        $tableau[0] = 'none';
+        $tableau[1] = 'none';
+        $tableau[2] = 'none';
+        $tableau[3] = 'none';
+
+        $this->activeBar = $tableau;
+
+        if ($_SESSION['connected'] == TRUE && isset($_SESSION['connected'])) {
+
+            $this->listFriends = Members::getMembersNotFriend($_SESSION['idMember']);
+
+            if (isset($_POST['friendID']) && $_POST['friendID'] != "-") {
+
+                Members::associateFriend($_POST['friendID'], $_SESSION['idMember']);
+
+                $this->redirect('/profile/listfriends');
+            }
+        } else {
+            $this->redirect('/index/index');
+        }
+    }
+
+    public function uploadfileAction() {
+        $tableau = array();
+        $tableau[0] = 'none';
+        $tableau[1] = 'none';
+        $tableau[2] = 'none';
+        $tableau[3] = 'none';
+
+        $this->activeBar = $tableau;
+
+        if ($_SESSION['connected'] == TRUE && isset($_SESSION['connected'])) {
+
+            if (isset($_FILES['fileUpload'])) {
+                
+                $uploaddir = 'var/www/uploads/';
+                $nameFile = $_SESSION['idMember'] . '.' . basename($_FILES['fileUpload']['type']);
+                $uploadfile = $uploaddir . $nameFile;
+
+                if (move_uploaded_file($_FILES['fileUpload']['tmp_name'], $uploadfile)) {
+                    $member = new Member($_SESSION['email']);
+                    $member->saveCoordonnate($member->getSSN(), $member->getPhone(), $member->getEmail(), $nameFile);
+                    $this->redirect('/profile/editcoordonnate');
+                }
+            }
+        } else {
+            $this->redirect('/index/index');
+        }
+    }
+
+}
+
+?>

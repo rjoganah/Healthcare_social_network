@@ -1,0 +1,56 @@
+<div id="info-user-profile">
+    <div id="photo">
+        <?php
+        echo '<img src="';
+        if ($profile->getMember()->getPhoto() == NULL)
+            echo '/../img_global/unknown_photo_2.png">';
+
+        else {
+            
+        }
+        ?>
+    </div>
+    <div><table id="user-info" rules="none" cellpadding="2px">
+            <?php
+            echo '  <tr>';
+            echo '      <td>' . $profile->getMember()->getFirstname() . ' ' . $profile->getMember()->getLastname() . '</td>';
+            echo '  </tr>';
+            echo '  <tr>';
+            echo '      <td>' . $profile->getMember()->getBirthdate() . '</td>';
+            echo '  </tr>';
+            echo '  <tr>';
+            echo '      <td>' . $profile->getMember()->getEmail() . '</td>';
+            echo '  </tr>';
+            ?>
+        </table>
+    </div>
+</div>
+
+<div id="info-exam-profile">
+    <?php if (count($profile->getExams()) > 0) { ?>
+
+        <table id="user-table" border="1" rules="all" cellpadding="10px">
+            <tr>
+                <th>Service</th>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Comment</th>
+            <tr>
+                <?php
+                for ($i = 0; $i < count($profile->getExams()); $i++) {
+                    echo '  <tr>';
+                    echo '      <td>' . $profile->getExam($i)->getService() . '</td>';
+                    echo '      <td>' . $profile->getExam($i)->getDoctor() . '</td>';
+                    echo '      <td>' . $profile->getExam($i)->getDate() . '</td>';
+                    echo '      <td>' . $profile->getExam($i)->getComment() . '</td>';
+                    echo '  </tr>';
+                }
+                ?>
+
+        </table>
+        <?php
+    } else {
+        echo '<p><div>No exams done.</div></p>';
+    }
+    ?>
+</div>

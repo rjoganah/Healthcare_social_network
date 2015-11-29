@@ -1,0 +1,92 @@
+<?php
+
+require_once ('config.php');
+require_once dirname(__FILE__) . '/../model/Member.php';
+require_once dirname(__FILE__) . '/../model/Exam.php';
+/*
+ * Represent a profile page we can see : attached to a member and to updates
+ */
+
+class Profile {
+
+    // Member type
+    private $member;
+    // Array of Update objects
+    private $exams;
+
+    /*
+      Fill all properties thanks to the database
+     */
+
+    public function __construct($idMember) {
+        // SELECT
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+        $answer = $bdd->query('SELECT * FROM members where id =' . $idMember);
+
+        $data = $answer->fetch();
+
+
+        // Fill member
+        $this->member = new Member($data['email']);
+        
+        //$answer = $bdd->query('SELECT * FROM updates where idMember = ' . $idMember);
+
+        // Fill updates
+        $this->exams = $this->getAll($idMember);
+        
+        
+        //var_dump($this->updates);
+//        while ($data = $answer->fetch()) {
+//            $this->updates[] = new Update($data['idUpdate']);
+//        }
+
+        $answer->closeCursor();
+    }
+    
+    /*
+     * get all updates of a specific member
+     */
+    public function getAll($idMember) {
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+        
+        $answer = $bdd->query('SELECT * FROM exams WHERE idMember =' . $idMember);
+
+        $result = array();
+        
+        while($data = $answer->fetch()) {
+            $exam = new Exam($data['id']);
+            
+            $result[] = $exam;
+        }
+        
+        $answer->closeCursor();
+        
+        return $result;
+    }
+
+    public function getMember() {
+        return $this->member;
+    }
+
+    public function getExams() {
+        return $this->exams;
+    }
+    
+    public function getExam($index) {
+        return $this->exams[$index];
+    }
+
+    public function setMember($a) {
+        $this->member = $a;
+    }
+
+    public function setExams($a) {
+        $this->exams = $a;
+    }
+
+}
+
+?>

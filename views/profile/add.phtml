@@ -1,0 +1,59 @@
+<div id="main">
+    <?php
+    if ($result == FALSE) {
+        echo 'Unauthorized access';
+    } else {
+        ?>
+        <h1>Post an exam</h1>
+        <p></p>
+
+        <form method="post" action="/profile/add" onsubmit="return validateAddExam();">
+            <table>
+
+                <tr>
+                    <td></td>
+                    <td><div id="message"></div></td>
+                </tr>
+
+                <tr>
+                    <td><label for="service">Service :</label></td>
+                    <td>
+                        <select id="service" name="service">
+                            <option value="-">- Select a service</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Cancerology">Cancerology</option>
+                            <option value="Radiology">Radiology</option>
+                        </select>
+                    </td>
+                </tr>
+
+<!--                <tr>
+                    <td><label for="patient">Patient :</label></td>
+                    <td>
+                        <select id="member" name="idMember">
+                            <option value="0">- Select a patient</option>
+                            <?php
+                            for ($i = 0; $i < count($allMembers); $i++) {
+                                echo '<option value=' . $allMembers[$i]['idMember'] . '>' . $allMembers[$i]['pseudo'] . '</option>';
+                            }
+                            ?>
+
+                        </select>
+                    </td>
+                </tr>-->
+
+                <tr>
+                    <td><label for="content">Status :</label></td>
+                    <td><textarea name="content" id="content" rows="4" cols="22"></textarea></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td><button id="submit-button" type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+        <?php
+    }
+    ?>

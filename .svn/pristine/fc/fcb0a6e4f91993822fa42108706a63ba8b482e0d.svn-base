@@ -1,0 +1,145 @@
+<?php
+
+require_once ('config.php');
+require_once dirname(__FILE__) . '/../model/Member.php';
+
+class Members {
+    /*
+     * if $mode = true or no arg given, return the last three profiles created
+     * if $mode = false, return three random profile
+     * A profile is defined by an array with two keys : image, pseudo
+     */
+
+//    public static function getFrontProfiles($mode = true) {
+//        // SELECT
+//        $arrayOfMember = array();
+//
+//        // connect to database
+//        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+//        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+//
+//        // query
+//        if ($mode)
+//            $answer = $bdd->query('SELECT M.pseudo, M.image FROM member M, exams U where M.idMember = U.idMember ORDER BY U.date DESC LIMIT 3');
+//        else
+//            $answer = $bdd->query('SELECT M.pseudo, M.image FROM member M, exams U where M.idMember = U.idMember');
+//
+//
+//        if ($mode) {
+//            // get data
+//            $data = $answer->fetchAll();
+//
+//            for ($i = 0; $i < count($data); $i++) {
+//                $aMember = new Member();
+//                $aMember->setPseudo($data[$i]['pseudo']);
+//                $aMember->setImage($data[$i]['image']);
+//
+//                $arrayOfMember[] = $aMember;
+//            }
+//        } else {
+//
+//            $data = $answer->fetchAll();
+//            // ramdom the array of members
+//            shuffle($data);
+//
+//            for ($i = 0; $i < 3; $i++) {
+//                $aMember = new Member();
+//                $aMember->setPseudo($data[$i]['pseudo']);
+//                $aMember->setImage($data[$i]['image']);
+//
+//                $arrayOfMember[] = $aMember;
+//            }
+//        }
+//
+//        // close connection
+//        $answer->closeCursor();
+//
+//        return $arrayOfMember;
+//    }
+
+    /*
+     * If username and password is in database, return TRUE. Otherwise, return false
+     */
+
+    public static function signIn($email, $password) {
+        // SELECT
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+        $answer = $bdd->query('SELECT * FROM members M where EXISTS(SELECT * FROM members where M.id=id and email=\'' . $email . '\' and password=\'' . $password . '\')');
+        
+        $data = $answer->fetch();
+
+        $answer->closeCursor();
+
+        if ($data == TRUE)
+            return true;
+        else
+            return false;
+    }
+
+    /*
+     * Return an array of all members stored in database. If $number is different from 0, 
+     * limit the size of the array.
+     * If $number = -1 return member order alphabetically
+     */
+
+    public static function getAll($number = 0) {
+        // SELECT
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+        if ($number < 0)
+            $answer = $bdd->query('SELECT * FROM members ORDER BY lastname ASC');
+        else if ($number > 0)
+            $answer = $bdd->query('SELECT * FROM members LIMIT ' . $number);
+        else
+            $answer = $bdd->query('SELECT * FROM members');
+
+        $result = array();
+
+        while ($data = $answer->fetch()) {
+            $result[] = $data;
+        }
+
+        $answer->closeCursor();
+
+        return $result;
+    }
+
+    /*
+      Delete the given member, if $idMember is not empty
+     */
+
+    public static function delete($idMember) {
+        // DELETE
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+        
+        $req = $bdd->prepare('DELETE FROM members where id =' . $idMember);
+        $req->execute();
+    }
+
+    public static function getRSS($idMember) {
+        // connect to DB
+        // get the last entries in an array
+
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+        $answer = $bdd->query('SELECT lastname, isAdmin FROM members where id=' . $idMember);
+
+        $result = array();
+
+        while ($data = $answer->fetch()) {
+            $result[] = $data;
+        }
+
+        $answer->closeCursor();
+
+        return $result;
+    }
+
+}
+
+?>

@@ -1,0 +1,188 @@
+<?php
+
+require_once ('config.php');
+
+class Member {
+
+    private $id = NULL;
+    private $isAdmin = 0;
+    private $ssn;
+    private $firstname;
+    private $lastname;
+    private $birthdate;
+    private $password;
+    private $email;
+    private $sex;
+    private $phone;
+    private $photo = NULL;
+
+    public function __construct($email = NULL) {
+        if ($email != NULL) {
+
+            $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+            $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+            $answer = $bdd->query('SELECT * FROM members WHERE email =\'' . $email . '\'');
+
+            $data = $answer->fetch();
+
+            $this->setID($data['id']);
+            $this->setSSN($data['ssn']);
+            $this->setFirstname($data['firstname']);
+            $this->setLastname($data['lastname']);
+            $this->setPhone($data['phone']);
+            $this->setEmail($data['email']);
+            $this->setPassword($data['password']);
+            $this->setSex($data['sex']);
+            $this->setPhoto($data['photo']);
+            $this->setAdmin($data['isAdmin']);
+            $this->setBirthdate($data['birthdate']);
+
+            $answer->closeCursor();
+        }
+    }
+
+    /*
+      Save the member into the database. If the id property is null, create a new member
+      If not, just update it
+     */
+
+    public function save() {
+        //UPDATE & INSERT
+
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+        if ($this->getID() == NULL) {
+            $req = $bdd->prepare('INSERT INTO members(ssn, firstname, lastname, birthdate, phone, email, password, sex, photo, isAdmin)
+                              VALUES(:ssn, :firstname, :lastname, :birthdate, :phone, :email, :password, :sex, :photo, :isAdmin)');
+
+            $req->execute(array(
+                ':ssn' => $this->getSSN(),
+                ':firstname' => $this->getFirstname(),
+                ':lastname' => $this->getLastname(),
+                ':birthdate' => $this->getBirthdate(),
+                ':phone' => $this->getPhone(),
+                ':email' => $this->getEmail(),
+                ':password' => $this->getPassword(),
+                ':sex' => $this->getSex(),
+                ':photo' => $this->getPhoto(),
+                ':isAdmin' => 0
+            ));
+        } else {
+            $req = $bdd->prepare('UPDATE members SET birthdate=:birthdate, phone=:phone, email=:email, password=:password, photo=:photo WHERE id=:id');
+
+            $req->execute(array(
+                ':id' => $this->getID(),
+                ':birthdate' => $_POST['day'] . '/' . $_POST['month'] . '/' . $_POST['year'],
+                ':phone' => $_POST['phone'],
+                ':email' => $_POST['email'],
+                ':password' => $_POST['password'],
+                ':photo' => $_POST['photo']
+            ));
+        }
+    }
+
+    /* is the current member admin ? */
+
+    public function isAdmin() {
+// SELECT
+        $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+        $bdd = new PDO(DSN, DB_USERNAME, DB_PASSWORD, $pdo_options);
+
+        $answer = $bdd->query('SELECT isAdmin FROM members WHERE id =' . $this->id);
+
+        $data = $answer->fetch();
+
+        $answer->closeCursor();
+
+        return $data['isAdmin'];
+    }
+
+    public function getSSN() {
+        return $this->ssn;
+    }
+
+    public function getFirstname() {
+        return $this->firstname;
+    }
+
+    public function getLastname() {
+        return $this->lastname;
+    }
+
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function getID() {
+        return $this->id;
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function getSex() {
+        return $this->sex;
+    }
+
+    public function getPhoto() {
+        return $this->photo;
+    }
+
+    public function getPhone() {
+        return $this->phone;
+    }
+
+    public function getBirthdate() {
+        return $this->birthdate;
+    }
+
+    public function setAdmin($a = NULL) {
+        $this->isAdmin = $a;
+    }
+
+    public function setPassword($pwd = NULL) {
+        $this->password = $pwd;
+    }
+
+    public function setEmail($mail = NULL) {
+        $this->email = $mail;
+    }
+
+    public function setSex($s = NULL) {
+        $this->sex = $s;
+    }
+
+    public function setPhoto($s = NULL) {
+        $this->photo = $s;
+    }
+
+    public function setID($s = NULL) {
+        $this->id = $s;
+    }
+
+    public function setSSN($s = NULL) {
+        $this->ssn = $s;
+    }
+
+    public function setFirstname($s = NULL) {
+        $this->firstname = $s;
+    }
+
+    public function setLastname($s = NULL) {
+        $this->lastname = $s;
+    }
+
+    public function setBirthdate($s = NULL) {
+        $this->birthdate = $s;
+    }
+
+    public function setPhone($s = NULL) {
+        $this->phone = $s;
+    }
+
+}
+
+?>

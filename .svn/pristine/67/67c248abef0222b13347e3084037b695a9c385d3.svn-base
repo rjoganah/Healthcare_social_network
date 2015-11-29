@@ -1,0 +1,30 @@
+<div id="main">
+    <h1>Add a friend</h1>
+    
+    <form method="post" action="/profile/addfriend" onsubmit="return validateAddFriend();">
+        <table>
+            <tr>
+                <td></td>
+                <td><div id="messageFriend"></div></td>
+            </tr>
+
+            <tr>
+                <td><label for="friend">Your new friend :</label></td>
+                <td>
+                    <select id="friendID" name="friendID">
+                        <option value ="-">Select someone</option>
+                        <?php
+                        for ($i = 0; $i < count($listFriends); $i++) {
+                            echo('<option value ="' . $listFriends[$i]->getID() . '">' . $listFriends[$i]->getLastname() . ' ' . $listFriends[$i]->getFirstname() . '</option>');
+                        }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><button id="submit" type="submit">Add</button></td>
+            </tr>
+        </table>
+    </form>

@@ -1,0 +1,138 @@
+<div id="main">
+<h1>Sign up</h1>
+<!--
+<?php
+/*
+//var_dump($newMember);
+if (isset($newMember)) {
+    echo 'Sign up success !<br />';
+    echo 'You can know log in by clicking <a class="link-login" href="/members/signin">here</a>';
+}
+else
+    echo 'One or multiple fields are missing.'
+ * 
+ */
+    ?>
+<p></p>-->
+
+<form method="post" action="/members/signup" onsubmit="return validateSignUp();">
+    <table>
+        <tr>
+            <td></td>
+            <td><div id="messageSignUp"<?php if(strlen($msg)>0) 
+            echo " class = \"print-message-form\"";?>><?php echo $msg; ?></div></td>
+        </tr>
+
+        <tr>
+            <td><label for="ssn">SSN :</label></td>
+            <td><input type="text" name="ssnSignUp" id="ssnSignUp" value="" size="39" maxlength="15"></td>
+        </tr>
+
+        <tr>
+            <td><label for="firstname">Firstname :</label></td>
+            <td><input type="text" name="firstnameSignUp" id="firstnameSignUp" value="" size="39" maxlength="30"></td>
+        </tr>
+
+        <tr>
+            <td><label for="lastname">Lastname :</label></td>
+            <td><input type="text" name="lastnameSignUp" id="lastnameSignUp" value="" size="39" maxlength="30"></td>
+        </tr>
+
+        <tr>
+            <td><label for="birthdate">Birthdate :</label></td>
+            <td><select id="monthSignUp" name="monthSignUp">
+                    <option value="-">Month</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+
+                <select id="daySignUp" name="daySignUp">
+                    <option value="-">Day</option>
+                    <option value="01">1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">5</option>
+                    <option value="06">6</option>
+                    <option value="07">7</option>
+                    <option value="08">8</option>
+                    <option value="09">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                </select>
+
+                <select id="yearSignUp" name="yearSignUp">
+                    <option value="-">Year</option>
+                    <?php 
+                    for($i = $actualYear; $i > ($actualYear - 100); $i--) {
+                        echo "<option value=\"$i\">$i</option>";
+                    }
+                    ?>
+                </select></td>
+        </tr>
+
+        <tr>
+            <td><label for="text">Sex :</label></td>
+            <td><select id="sexSignUp" name="sexSignUp">
+                    <option value="-">-</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select></td>
+        </tr>
+
+        <tr>
+            <td><label for="phone">Phone :</label></td>
+            <td><input type="text" name="phoneSignUp" id="phoneSignUp" value="" size="39" maxlength="10"></td>
+        </tr>
+        
+        <tr>
+            <td><label for="email">E-mail :</label></td>
+            <td><input type="text" name="emailSignUp" id="emailSignUp" value="" size="39" maxlength="50"></td>
+        </tr>
+
+        <tr>
+            <td><label for="password1">Password :</label></td>
+            <td><input type="password" name="password1SignUp" id="password1SignUp" value="" size="39" maxlength="30"></td>
+        </tr>
+
+        <tr>
+            <td><label for="password2">Confirm password :</label></td>
+            <td><input type="password" name="password2SignUp" id="password2SignUp" value="" size="39" maxlength="30"></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><button id="submit" type="submit">Sign up</button></td>
+        </tr>
+    </table>
+</form>

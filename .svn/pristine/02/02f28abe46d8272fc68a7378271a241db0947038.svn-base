@@ -1,0 +1,8 @@
+<?php
+
+//var_dump($profile->getUpdates());
+
+for ($i = 0; $i < count($profile->getUpdates()); $i++) {
+    echo $profile->getUpdate($i)->getContent() . '<br/>';
+}
+?>

@@ -1,0 +1,31 @@
+
+<form id="login" method="post" action="/members/signin" onsubmit="return validateSignInIndex();">
+
+    <h1>Sign In</h1>
+    <fieldset id="inputs">
+        <input name ="email" id="emailSignInIndex" type="text" placeholder="Email" autofocus required>
+        <input name="password" id="passwordSignInIndex" type="password" placeholder="Password" required>
+    </fieldset>
+    <fieldset id="actions">
+        <input type="submit" class="submit" id="submitIndex" value="Log in">
+        <a id="signup_link"href="/members/signup">Sign Up</a>
+    </fieldset>
+    <div id = "messageSignInIndex"></div>
+</form>
+<div id="main-jcarousel">
+    <div class="jcarousel">
+        <img src="/script/img/1.jpg" width="958" height="500" alt="">
+        <img src="/script/img/2.jpg" width="958" height="500" alt="">
+        <img src="/script/img/3.jpg" width="958" height="500" alt="">
+        <img src="/script/img/4.jpg" width="958" height="500" alt="">
+    </div>
+    <script type="text/javascript">
+    $(function() {
+        $(document).ready(function() {
+            $('.jcarousel').cycle({
+                fx: 'fade', // choose your transition type, ex: fade, scrollUp, shuffle, etc...
+                speed: 2500
+            });
+        });
+    });
+    </script>

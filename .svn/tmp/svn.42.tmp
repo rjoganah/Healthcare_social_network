@@ -1,0 +1,40 @@
+<div id="main">
+    <h1><?php echo $friendSelected->getFirstname() . ' ' . $friendSelected->getLastname() . '\'s'; ?> Wall</h1>
+    <div id="friend-field-comment">
+        <form method="post" action="/profile/friend" autocomplete="off" onsubmit="return validateAddFriendPost();">
+            <table style="border: none;">
+                <tr>
+                    <td><label for="comment">Post something :</label></td>
+                </tr>
+                <tr>
+                    <td><textarea autocomplete="off" title="Type your message..."  name="comment" id="comment" rows="6" cols="80" maxlength="480"></textarea></td>
+                </tr>
+                <tr>
+                    <input name = "idFriend" type = "hidden" value = "<?php echo $friendSelected->getID(); ?>">
+                    <td><button id="submit-button" type="submit">Post</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <button type ="button" onclick ="refreshFriendWall();">Refresh</button>
+    <div id="friend-wall">
+        <?php
+        
+        if (count($result['comments']) > 0) {
+            for ($i = 0; $i < count($result['comments']); $i++) {
+                echo '<table>';
+                echo '  <tr>';
+                echo '      <td><label for="sender">'. $result['names'][$i] . ' :</label></td>';
+                echo '  </tr>';
+                echo '  <tr>';
+                echo '      <td><label for="commentaire">'. $result['comments'][$i]->getComment() . '</label></td>';
+                echo '  </tr>';
+                echo '  <tr>';
+                echo '      <td><label for="date">'. $result['comments'][$i]->getDate() . '</label></td>';
+                echo '  </tr>';
+                echo '</table>';
+                echo '<br/>';
+            }
+        }
+        ?>
+    </div>
